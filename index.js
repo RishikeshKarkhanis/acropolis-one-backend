@@ -49,7 +49,7 @@ app.use('/student', studentRoutes);
 app.use('/faculty', facultyRoutes);
 app.use('/admin', adminRoutes);
 
-// Start the server
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+//Start the server
+app.listen(port, "0.0.0.0", () => {
+    console.log(`Server running on port ${port}`);
 });

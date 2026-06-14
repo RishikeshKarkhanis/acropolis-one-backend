@@ -1,9 +1,26 @@
 const db = require('../utilities/databaseConnection');
 const { v4: uuidv4 } = require('uuid');
 
+function getDistanceInMeters(lat1, lon1, lat2, lon2) {
+    const R = 6371000;
+
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+
+    const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) *
+        Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) ** 2;
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c;
+}
+
 const markAttendance = (
     scholarNumber,
-    lectureId
+    lectureId,
+    studentLatitude,
+    studentLongitude
 ) => {
 
     return new Promise((resolve, reject) => {
@@ -40,6 +57,16 @@ const markAttendance = (
                         message:
                             'Lecture is over! Cannot mark attendance.'
                     });
+                }
+
+                const lecture = lectureResults[0];
+
+                const horizontalDistance = getDistanceInMeters(lecture.facultyLatitude, lecture.facultyLongitude,
+                                                               studentLatitude, studentLongitude);
+
+                console.log("Distance:",horizontalDistance);
+                if (horizontalDistance > 10) {
+                    return reject({status: 403,message: "You are outside the classroom range"});
                 }
 
                 const duplicateQuery = `
@@ -215,12 +242,9 @@ const viewTotalAttendance = (
                         console.log(attendedResults);
                     }
 
-                    
+
                 );
             }
-
-            
-
         );
     });
 };

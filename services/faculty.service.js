@@ -158,7 +158,9 @@ const createLectureSession = (
     division,
     lectureDate,
     createdAt,
-    lectureType
+    lectureType,
+    facultyLatitude,
+    facultyLongitude
 ) => {
 
     return new Promise((resolve, reject) => {
@@ -174,9 +176,11 @@ const createLectureSession = (
                 division,
                 lectureDate,
                 createdAt,
-                lectureType
+                lectureType,
+                facultyLatitude,
+                facultyLongitude
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
 
         db.query(
@@ -190,7 +194,9 @@ const createLectureSession = (
                 division,
                 lectureDate,
                 createdAt,
-                lectureType
+                lectureType,
+                facultyLatitude,
+                facultyLongitude
             ],
             (err, results) => {
 

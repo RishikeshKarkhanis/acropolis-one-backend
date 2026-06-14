@@ -45,12 +45,14 @@ const markAttendance = async (req, res) => {
         const scholarNumber =
             req.session.user.scholarNumber;
 
-        const { lectureId } = req.body;
+        const { lectureId, studentLatitude, studentLongitude } = req.body;
 
         const result =
             await studentService.markAttendance(
                 scholarNumber,
-                lectureId
+                lectureId,
+                studentLatitude,
+                studentLongitude
             );
 
         return res.status(200).json(result);

@@ -210,7 +210,9 @@ const createLectureSession = async (req, res) => {
             division,
             lectureDate,
             createdAt,
-            lectureType
+            lectureType,
+            req.body.facultyLatitude,
+            req.body.facultyLongitude
         );
 
         return res.status(200).json({
@@ -282,4 +284,4 @@ module.exports = {
     assignedSubjects,
     createLectureSession,
     endLectureSession
-};
+}; 
