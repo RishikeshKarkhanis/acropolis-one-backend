@@ -13,4 +13,6 @@ router.post('/login/admin', authController.loginAdmin); // Route for admin login
 router.post('/register/faculty', authController.registerFaculty); // Route for faculty registration
 router.post('/login/faculty', authController.loginFaculty); // Route for faculty login
 
+router.post('/logout', authController.logout);
+
 module.exports = router;

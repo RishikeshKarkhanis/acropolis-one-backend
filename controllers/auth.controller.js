@@ -158,11 +158,22 @@ const loginFaculty = async (req, res) => {
     }
 };
 
+const logout = (req, res) => {
+
+    res.clearCookie('uid', { httpOnly: true });
+
+    return res.status(200).json({
+        success: true,
+        message: 'Logged out successfully'
+    });
+};
+
 module.exports = {
     registerStudent,
     loginStudent,
     registerAdmin,
     loginAdmin,
     registerFaculty,
-    loginFaculty
+    loginFaculty,
+    logout
 };
