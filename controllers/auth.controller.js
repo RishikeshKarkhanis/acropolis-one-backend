@@ -1,4 +1,5 @@
 const authService = require('../services/auth.service');
+const { generateToken } = require('../utilities/jwt');
 
 const registerStudent = async (req, res) => {
     try {
@@ -24,7 +25,7 @@ const loginStudent = async (req, res) => {
         );
 
         // CREATE SESSION
-        req.session.user = {
+        const payload = {
             role: 'student',
             scholarNumber: response.data.scholarNumber,
             name: response.data.name,
@@ -33,6 +34,13 @@ const loginStudent = async (req, res) => {
             semester: response.data.semester,
             section: response.data.section
         };
+
+        const token = generateToken(payload);
+
+        res.cookie('uid', token, {
+            httpOnly: true,
+            maxAge: 1000 * 60 * 60 * 24
+        });
 
         return res.status(200).json(response);
 
@@ -70,13 +78,20 @@ const loginAdmin = async (req, res) => {
             password
         );
 
-        req.session.user = {
+        const payload = {
             role: 'admin',
             adminNumber: response.data.adminNumber,
             name: response.data.name,
             email: response.data.email,
             department: response.data.department
         };
+
+        const token = generateToken(payload);
+
+        res.cookie('uid', token, {
+            httpOnly: true,
+            maxAge: 1000 * 60 * 60 * 24
+        });
 
         return res.status(200).json(response);
 
@@ -116,13 +131,20 @@ const loginFaculty = async (req, res) => {
             password
         );
 
-        req.session.user = {
+        const payload = {
             role: 'faculty',
             employeeNumber: response.data.employeeNumber,
             name: response.data.name,
             email: response.data.email,
             department: response.data.department
         };
+
+        const token = generateToken(payload);
+
+        res.cookie('uid', token, {
+            httpOnly: true,
+            maxAge: 1000 * 60 * 60 * 24
+        });
 
         return res.status(200).json(response);
 

@@ -2,7 +2,7 @@ const facultyService = require('../services/faculty.service');
 
 const getCurrentFaculty = (req, res) => {
 
-    if (!req.session.user) {
+    if (!req.user) {
 
         return res.status(401).json({
             success: false,
@@ -10,7 +10,7 @@ const getCurrentFaculty = (req, res) => {
         });
     }
 
-    if (req.session.user.role !== 'faculty') {
+    if (req.user.role !== 'faculty') {
 
         return res.status(403).json({
             success: false,
@@ -20,13 +20,13 @@ const getCurrentFaculty = (req, res) => {
 
     return res.status(200).json({
         success: true,
-        faculty: req.session.user
+        faculty: req.user
     });
 };
 
 const takeAttendance = (req, res) => {
 
-    if (!req.session.user) {
+    if (!req.user) {
 
         return res.status(401).json({
             success: false,
@@ -34,7 +34,7 @@ const takeAttendance = (req, res) => {
         });
     }
 
-    if (req.session.user.role !== 'faculty') {
+    if (req.user.role !== 'faculty') {
 
         return res.status(403).json({
             success: false,
@@ -54,7 +54,7 @@ const assignedSubjects = async (req, res) => {
 
     try {
 
-        if (!req.session.user) {
+        if (!req.user) {
 
             return res.status(401).json({
                 success: false,
@@ -62,7 +62,7 @@ const assignedSubjects = async (req, res) => {
             });
         }
 
-        if (req.session.user.role !== 'faculty') {
+        if (req.user.role !== 'faculty') {
 
             return res.status(403).json({
                 success: false,
@@ -71,7 +71,7 @@ const assignedSubjects = async (req, res) => {
         }
 
         const subjects = await facultyService.assignedSubjects(
-            req.session.user.employeeNumber
+            req.user.employeeNumber
         );
 
         return res.status(200).json({
@@ -96,7 +96,7 @@ const createLectureSession = async (req, res) => {
 
         // Authentication Check
 
-        if (!req.session.user) {
+        if (!req.user) {
 
             return res.status(401).json({
                 success: false,
@@ -106,7 +106,7 @@ const createLectureSession = async (req, res) => {
 
         // Role Check
 
-        if (req.session.user.role !== 'faculty') {
+        if (req.user.role !== 'faculty') {
 
             return res.status(403).json({
                 success: false,
@@ -114,7 +114,7 @@ const createLectureSession = async (req, res) => {
             });
         }
 
-        const employeeNumber = req.session.user.employeeNumber;
+        const employeeNumber = req.user.employeeNumber;
 
         const { subjectCode, semester, department, division, lectureType } = req.body;
 
@@ -240,7 +240,7 @@ const createLectureSession = async (req, res) => {
 
 const endLectureSession = (req, res) => {
 
-    if (!req.session.user) {
+    if (!req.user) {
 
         return res.status(401).json({
             success: false,
@@ -248,7 +248,7 @@ const endLectureSession = (req, res) => {
         });
     }
 
-    if (req.session.user.role !== 'faculty') {
+    if (req.user.role !== 'faculty') {
 
         return res.status(403).json({
             success: false,

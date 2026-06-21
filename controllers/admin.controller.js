@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require('uuid');
 
 const getCurrentAdmin = (req, res) => {
 
-    if (!req.session.user) {
+    if (!req.user) {
 
         return res.status(401).json({
             success: false,
@@ -13,7 +13,7 @@ const getCurrentAdmin = (req, res) => {
         });
     }
 
-    if (req.session.user.role !== 'admin') {
+    if (req.user.role !== 'admin') {
 
         return res.status(403).json({
             success: false,
@@ -23,7 +23,7 @@ const getCurrentAdmin = (req, res) => {
 
     return res.status(200).json({
         success: true,
-        admin: req.session.user
+        admin: req.user
     });
 };
 
@@ -31,7 +31,7 @@ const getAllFaculties = async (req, res) => {
 
     try {
 
-        if (!req.session.user) {
+        if (!req.user) {
 
             return res.status(401).json({
                 success: false,
@@ -39,7 +39,7 @@ const getAllFaculties = async (req, res) => {
             });
         }
 
-        if (req.session.user.role !== 'admin') {
+        if (req.user.role !== 'admin') {
 
             return res.status(403).json({
                 success: false,
@@ -67,7 +67,7 @@ const createFaculty = async (req, res) => {
 
     try {
 
-        if (!req.session.user) {
+        if (!req.user) {
 
             return res.status(401).json({
                 success: false,
@@ -75,7 +75,7 @@ const createFaculty = async (req, res) => {
             });
         }
 
-        if (req.session.user.role !== 'admin') {
+        if (req.user.role !== 'admin') {
 
             return res.status(403).json({
                 success: false,
@@ -113,7 +113,7 @@ const removeFaculty = async (req, res) => {
 
     try {
 
-        if (!req.session.user) {
+        if (!req.user) {
 
             return res.status(401).json({
                 success: false,
@@ -121,7 +121,7 @@ const removeFaculty = async (req, res) => {
             });
         }
 
-        if (req.session.user.role !== 'admin') {
+        if (req.user.role !== 'admin') {
 
             return res.status(403).json({
                 success: false,
@@ -157,7 +157,7 @@ const assignSubjectToFaculty = async (req, res) => {
 
     try {
 
-        if (!req.session.user) {
+        if (!req.user) {
 
             return res.status(401).json({
                 success: false,
@@ -165,7 +165,7 @@ const assignSubjectToFaculty = async (req, res) => {
             });
         }
 
-        if (req.session.user.role !== 'admin') {
+        if (req.user.role !== 'admin') {
 
             return res.status(403).json({
                 success: false,
@@ -218,7 +218,7 @@ const unassignSubjectFromFaculty = async (req, res) => {
 
     try {
 
-        if (!req.session.user) {
+        if (!req.user) {
 
             return res.status(401).json({
                 success: false,
@@ -226,7 +226,7 @@ const unassignSubjectFromFaculty = async (req, res) => {
             });
         }
 
-        if (req.session.user.role !== 'admin') {
+        if (req.user.role !== 'admin') {
 
             return res.status(403).json({
                 success: false,
@@ -265,7 +265,7 @@ const createSubject = async (req, res) => {
 
         // Authentication Check
 
-        if (!req.session.user) {
+        if (!req.user) {
 
             return res.status(401).json({
                 success: false,
@@ -275,7 +275,7 @@ const createSubject = async (req, res) => {
 
         // Admin Role Check
 
-        if (req.session.user.role !== 'admin') {
+        if (req.user.role !== 'admin') {
 
             return res.status(403).json({
                 success: false,
@@ -324,7 +324,7 @@ const removeSubject = async (req, res) => {
 
         // Authentication Check
 
-        if (!req.session.user) {
+        if (!req.user) {
 
             return res.status(401).json({
                 success: false,
@@ -334,7 +334,7 @@ const removeSubject = async (req, res) => {
 
         // Admin Role Check
 
-        if (req.session.user.role !== 'admin') {
+        if (req.user.role !== 'admin') {
 
             return res.status(403).json({
                 success: false,
@@ -370,7 +370,7 @@ const getAllSubjects = async (req, res) => {
 
     try {
 
-        if (!req.session.user) {
+        if (!req.user) {
 
             return res.status(401).json({
                 success: false,
@@ -378,7 +378,7 @@ const getAllSubjects = async (req, res) => {
             });
         }
 
-        if (req.session.user.role !== 'admin') {
+        if (req.user.role !== 'admin') {
 
             return res.status(403).json({
                 success: false,

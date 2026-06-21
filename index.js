@@ -1,7 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const db = require('./utilities/databaseConnection');
 
@@ -26,22 +25,6 @@ app.use(cors({
 }));
 
 app.use(cookieParser());
-
-app.use(
-    session({
-        secret: 'attendance_secret_key',
-
-        resave: false,
-
-        saveUninitialized: false,
-
-        cookie: {
-            secure: false, // true only in HTTPS
-            httpOnly: true,
-            maxAge: 1000 * 60 * 60 * 24 // 1 day
-        }
-    })
-);
 
 // Use Routes
 app.use('/auth', authRoutes);
